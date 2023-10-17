@@ -21,18 +21,17 @@ function Login() {
         sm={2}
         md={7}
         sx={{
-          backgroundImage:
-            "url(https://img.freepik.com/vector-gratis/ilustracion-concepto-estadisticas-sitio_114360-1434.jpg?w=740&t=st=1697515796~exp=1697516396~hmac=d206fcbc0ed5339042418400be8382a11bc7fc623021c7b784d5507bb4b6a891)",
+          backgroundImage:"url(https://www.advotics.com/wp-content/uploads/2022/12/cover-Proses-Manajemen-Inventory-dan-Metode-Penerapannya-01-1-1536x984.png)",
           backgroundRepeat: "no-repeat",
-          // backgroundColor: (t) =>
-          //   t.palette.mode === "light"
-          //     ? t.palette.grey[50]
-          //     : t.palette.grey[900],
-          backgroundSize: "contain",
+          backgroundColor: (t) =>
+            t.palette.mode === "light"
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
+          backgroundSize:"cover",
           backgroundPosition: "center",
         }}
       />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6}>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
             my: 20,
