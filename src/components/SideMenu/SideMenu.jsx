@@ -39,7 +39,7 @@ const Drawer = styled(MuiDrawer, {
 })(({ theme, open }) => ({
   "& .MuiDrawer-paper": {
     position: "fixed",
-    whiteSpace: "wrap",
+    whiteSpace: "nowrap",
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -63,7 +63,7 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 export default function SideMenu() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -72,7 +72,7 @@ export default function SideMenu() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="fixed" open={open}>
           <Toolbar
             sx={{
               pr: "24px",
@@ -84,7 +84,6 @@ export default function SideMenu() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: "36px",
                 ...(open && { display: "none" }),
               }}
             >
