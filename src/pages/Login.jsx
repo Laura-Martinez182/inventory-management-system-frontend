@@ -8,12 +8,56 @@ import {
   Typography,
 } from "@mui/material";
 
+import axiosInstance from "../config/axios";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/reducers/UserSlice"
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 function Login() {
-  // const [email, setEmail] = useState();
-  // const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+
+  const onLogin = async (e) => {
+
+    const bodyParams = {
+      email:email,
+      password:password
+    }
+
+    var success = false
+
+    await axiosInstance.post('/api/token/',bodyParams).then((response) =>{
+      const accessToken = response['data'].access
+      const refreshToken = response['data'].refresh
+        
+      dispatch(
+        login({
+          email:email,
+          accessToken:accessToken,
+          refreshToken:refreshToken
+        })
+      )   
+      
+      success = true
+      toast.success(<div>Log in succesful</div>)
+    }).catch((error) =>{
+      toast.error(<div>Log in failed. Try again</div>)
+    })
+
+    if(success){
+      navigate('/productList')
+    }    
+  }
 
   return (
-    <Grid container sx={{ height: "100vh", width: "100vw" }}>
+    <>
+    <Grid container sx={{ height: "100vh", width: "100vw" }}>      
       <Grid
         item
         xs={false}
@@ -44,7 +88,7 @@ function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" noValidate onSubmit={""} sx={{ mt: 1 }}>
+          <Box sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -54,6 +98,7 @@ function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -64,11 +109,13 @@ function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
+              onClick={onLogin}
               sx={{
                 mt: 3,
                 mb: 2,
@@ -84,6 +131,7 @@ function Login() {
         </Box>
       </Grid>
     </Grid>
+    </>
   );
 }
 export default Login;
