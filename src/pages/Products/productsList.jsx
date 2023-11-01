@@ -1,26 +1,44 @@
-import * as React from "react";
+import * as React from 'react';
+import {useState } from 'react'
 import PageTemplate from "../../components/PageTemplate";
-import { Box, Button, IconButton } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { Box, Button } from "@mui/material";
+import { SearchBar } from "../../components/SearchBar";
+import PropTypes from "prop-types";
 
-function createData(id, photo, name, code, amount, price, date) {
-  return { id, photo, name, code, amount, price, date };
-}
+import productsData from "../../data/products.json";
+import ProductRow from "./ProductRow";
+import NewProduct from './newProduct';
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+function ProductList() {
+  const [product, setProduct] = useState(productsData);
 
-export default function ProductList() {
+  
+
+  const renderProduct = () => {
+    return product.map((product) => (
+      <ProductRow key={product.id} product={product} />
+    ));
+  };
+
   return (
     <PageTemplate>
       <h1 className="text-4xl	font-bold text-left m-5">Lista de productos</h1>
-      <Box sx={{display:"flex"}}>
-      <Button variant="contained" sx={{margin:"20px"}}> Agregar producto </Button>
-      
+      <Box
+        sx={{
+          my: 5,
+          mx: 4,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <Button variant="contained" sx={{ margin: "20px" }}>
+          {" "}
+          Agregar producto{" "}
+        </Button>
+        <SearchBar />
       </Box>
-      
+
       <div
         className={
           "flex-col items-center align-center justify-center w-[70vw] drop-shadow-lg rounded-lg m-3 overflow-y-scroll"
@@ -81,155 +99,16 @@ export default function ProductList() {
                 Acciones
               </th>
             </tr>
-            <tr>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Ayub Salas
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Designer
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Carroll Group
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Member
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                salas_a
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <IconButton aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-              <IconButton aria-label="delete">
-                <EditIcon />
-              </IconButton>
-              
-            </tr>
-            <tr>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Agnes Sherman
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Developer
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Apple
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Admin
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                shermanagnes
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <IconButton aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-              <IconButton aria-label="delete">
-                <EditIcon />
-              </IconButton>
-            </tr>
-            <tr>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Jemma Cummings
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Senior Designer
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                20goto10
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Member
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                jemmaC
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <IconButton aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-              <IconButton aria-label="delete">
-                <EditIcon />
-              </IconButton>
-            </tr>
-            <tr>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Jimi Cardenas
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Copywriter
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Wind-UI
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Owner
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                cardenasji
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <IconButton aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-              <IconButton aria-label="delete">
-                <EditIcon />
-              </IconButton>
-            </tr>
-            <tr>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Mateusz Tucker
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Project Manager
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Tailwindui
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                Member
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
-                mt
-              </td>
-              <IconButton aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-              <IconButton aria-label="delete">
-                <EditIcon />
-              </IconButton>
-            </tr>
+            {renderProduct()}
           </tbody>
         </table>
       </div>
     </PageTemplate>
   );
 }
+
+ProductList.propTypes = {
+  person: PropTypes.object.isRequired,
+};
+
+export default ProductList;

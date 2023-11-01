@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login.jsx";
-import ProductList from "../pages/Products/productsList.jsx";
+import ProductList from "../pages/Products/ProductsList.jsx";
 
 const Router = () => (
   <BrowserRouter>
