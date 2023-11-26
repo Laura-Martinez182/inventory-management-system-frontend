@@ -1,7 +1,8 @@
 import { IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import PropTypes from "prop-types";
+import { red, blue } from '@mui/material/colors';
 
 function ProductRow({ product }) {
   return (
@@ -14,10 +15,10 @@ function ProductRow({ product }) {
       <td className={style.rowStyle}>{product.price}</td>
       <td className={style.rowStyle}>{product.date}</td>
       <IconButton aria-label="delete">
-        <DeleteIcon />
+        <DeleteRoundedIcon sx={{ color: red[500] }}/>
       </IconButton>
       <IconButton aria-label="edit">
-        <EditIcon />
+        <EditRoundedIcon sx={{ color: blue[500] }}/>
       </IconButton>
     </tr>
   )

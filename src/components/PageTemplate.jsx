@@ -5,7 +5,7 @@ const PageTemplate = ({ children }) => {
     return (
         <div >
             <SideMenu/>
-            <main className="h-auto w-auto ml-52">
+            <main className="h-fit p-20 ml-52">
                 {children}
             </main>
         </div>
