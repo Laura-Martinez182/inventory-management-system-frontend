@@ -6,15 +6,21 @@ import { SearchBar } from "../../components/SearchBar";
 import PropTypes from "prop-types";
 import productsData from "../../data/products.json";
 import ProductRow from "./ProductRow";
+import { useNavigate } from "react-router-dom";
 
 function ProductsList() {
   const [product, setProduct] = useState(productsData);
+  const navigation = useNavigate();
 
   const renderProduct = () => {
     return product.map((product) => (
       <ProductRow key={product.id} product={product} />
     ));
   };
+
+  const addProduct = () => {
+    navigation("/new-product");
+}
 
   return (
     <PageTemplate>
@@ -28,7 +34,7 @@ function ProductsList() {
           alignItems: "center",
         }}
       >
-        <Button variant="contained" sx={{ margin: "20px" }}>
+        <Button variant="contained" sx={{ margin: "20px" }} onClick={addProduct}>
           {" "}
           Agregar producto{" "}
         </Button>
