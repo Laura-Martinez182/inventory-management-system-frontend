@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import SideMenu from "./SideMenu/SideMenu";
+import NavBar from '../navigation/NavBar';
 
 const PageTemplate = ({ children }) => {
     return (
         <div >
-            <SideMenu/>
+            <NavBar/>
             <main className="h-fit p-20 ml-52">
                 {children}
             </main>

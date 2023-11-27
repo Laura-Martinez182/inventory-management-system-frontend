@@ -18,10 +18,6 @@ function ProductsList() {
     ));
   };
 
-  const addProduct = () => {
-    navigation("/new-product");
-}
-
   return (
     <PageTemplate>
       <h1 className="text-4xl	font-bold text-left m-5">Lista de productos</h1>
@@ -34,7 +30,7 @@ function ProductsList() {
           alignItems: "center",
         }}
       >
-        <Button variant="contained" sx={{ margin: "20px" }} onClick={addProduct}>
+        <Button variant="contained" sx={{ margin: "20px" }} onClick={() => navigation("/new-product")}>
           {" "}
           Agregar producto{" "}
         </Button>
