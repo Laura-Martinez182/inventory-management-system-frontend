@@ -5,7 +5,7 @@ const PageTemplate = ({ children }) => {
     return (
         <div >
             <NavBar/>
-            <main className="h-fit p-20 ml-52">
+            <main className="p-20">
                 {children}
             </main>
         </div>

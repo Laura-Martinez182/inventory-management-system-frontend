@@ -52,7 +52,7 @@ const NavBar = () => {
 
             <Typography 
             variant="h6"
-            className="flex-grow flex-nowrap bold text-emerald-500">
+            className="text-center flex-grow flex-nowrap bold text-emerald-500">
               Manejo de inventario
             </Typography>
             <IconButton

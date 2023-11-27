@@ -20,7 +20,7 @@ function ProductsList() {
 
   return (
     <PageTemplate>
-      <h1 className="text-4xl	font-bold text-left m-5">Lista de productos</h1>
+      <h1 className="text-3xl	font-bold text-left m-5">Lista de productos</h1>
       <Box
         sx={{
           my: 5,

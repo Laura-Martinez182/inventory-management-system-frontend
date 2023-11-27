@@ -1,7 +1,9 @@
 #root {
-  max-width: fit-content;
-  max-height: max-content;
-  text-align: center;
+  margin: 0 auto;
+  position: fixed;
+  background-color: whitesmoke;
+  height: 100%;
+  width: 100%;  
 }
 
 .logo {
