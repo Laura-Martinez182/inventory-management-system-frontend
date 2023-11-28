@@ -4,27 +4,25 @@ import PageTemplate from "../../components/PageTemplate";
 import { Box, Button } from "@mui/material";
 import PropTypes from "prop-types";
 import productsData from "../../data/products.json";
-import ProductRow from "./ProductRow";
+import UserRow from "./UserRow";
 import { useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 
-function ProductsList() {
-  const [product, setProduct] = useState([]);
+function UsersList() {
+  const [user, setUser] = useState(productsData);
   const navigation = useNavigate();
 
-  const renderProduct = () => {
-    return product.map((product) => (
-      <ProductRow key={product.id} product={product} />
-    ));
-  };
+  // const renderProduct = () => {
+  //   return product.map((product) => (
+  //     <ProductRow key={product.id} product={product} />
+  //   ));
+  // };
 
   return (
     <PageTemplate>
       <div className=" bg-white rounded shadow-md text-slate-800 shadow-slate-200 mb-10">
         <div className="p-6">
-          <h1 className="text-3xl	font-bold text-left m-5">
-            Lista de productos
-          </h1>
+          <h1 className="text-3xl	font-bold text-left m-5">Lista de usuarios</h1>
           <Divider />
         </div>
         <Box
@@ -39,9 +37,9 @@ function ProductsList() {
           <Button
             color="success"
             variant="contained"
-            onClick={() => navigation("/new-product")}
+            onClick={() => navigation("/new-user")}
           >
-            Agregar producto
+            Agregar usuario
           </Button>
         </Box>
 
@@ -53,32 +51,23 @@ function ProductsList() {
             <thead className="text-xs text-gray-900 uppercase bg-emerald-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  Foto
+                  ID
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Nombre
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Codigo
+                  Apellido
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Cantidad
+                  Rol
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Costo
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Precio
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Fecha
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Acciones
+                  Correo
                 </th>
               </tr>
             </thead>
-            <tbody>{renderProduct()}</tbody>
+            <tbody> </tbody>
           </table>
         </div>
       </div>
@@ -86,8 +75,8 @@ function ProductsList() {
   );
 }
 
-ProductsList.propTypes = {
-  product: PropTypes.object.isRequired,
+UsersList.propTypes = {
+  user: PropTypes.object.isRequired,
 };
 
-export default ProductsList;
+export default UsersList;

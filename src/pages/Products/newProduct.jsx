@@ -2,18 +2,20 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import PageTemplate from "../../components/PageTemplate";
 import Divider from "@mui/material/Divider";
 import AddImageInput from "../../components/AddImageInput";
+import { useNavigate } from "react-router-dom";
 
 export default function NewProduct() {
+  const navigation = useNavigate();
+
   return (
     <PageTemplate>
-      <Container className=" bg-white rounded shadow-md text-slate-800 shadow-slate-200 mb-10">
+      <Container className="bg-white rounded shadow-md text-slate-800 shadow-slate-200">
         <CssBaseline />
         <div className="p-6">
           <h1 className="text-3xl	font-bold text-left m-5">Nuevo producto</h1>
@@ -26,7 +28,7 @@ export default function NewProduct() {
             alignItems: "center",
           }}
         >
-          <Box component="form" noValidate sx={{ mt: 3 }}>
+          <Box component="form" noValidate sx={{ m: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <AddImageInput />
@@ -141,7 +143,7 @@ export default function NewProduct() {
               <Grid item xs={12} sm={6}>
                 <Button
                   color="error"
-                  type="submit"
+                  onClick={() => navigation("/product-list")}
                   fullWidth
                   variant="outlined"
                   sx={{ mt: 3, mb: 2 }}
