@@ -2,8 +2,7 @@ import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 
 export default function AddImageInput() {
     return (
-        <div className="col-span-4 lg:col-span-6">
-        <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+        <div className="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-2 py-4">
           <div className="text-center">
             <FileUploadRoundedIcon
               className="mx-auto h-12 w-10 text-gray-300"
@@ -27,6 +26,5 @@ export default function AddImageInput() {
             <p className="text-xs leading-5 text-gray-600">PNG o JPG</p>
           </div>
         </div>
-      </div>
     )
 }

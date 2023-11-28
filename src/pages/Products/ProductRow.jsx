@@ -2,7 +2,7 @@ import { IconButton } from "@mui/material";
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import PropTypes from "prop-types";
-import { red, blue } from '@mui/material/colors';
+import { red, green } from '@mui/material/colors';
 
 function ProductRow({ product }) {
   return (
@@ -18,7 +18,7 @@ function ProductRow({ product }) {
         <DeleteRoundedIcon sx={{ color: red[500] }}/>
       </IconButton>
       <IconButton aria-label="edit">
-        <EditRoundedIcon sx={{ color: blue[500] }}/>
+        <EditRoundedIcon sx={{ color: green[500] }}/>
       </IconButton>
     </tr>
   )
