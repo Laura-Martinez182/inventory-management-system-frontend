@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types'
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -9,9 +10,28 @@ import PageTemplate from "../../components/PageTemplate";
 import Divider from "@mui/material/Divider";
 import AddImageInput from "../../components/AddImageInput";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
 
-export default function NewProduct() {
+function NewProduct({ addProduct }) {
+  const [name, setName] = useState("");
+  const [code, setCode] = useState("");
+  const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
+  const [dimensions, setDimensions] = useState("");
+  const [description, setDescription] = useState("");
+  const [units, setUnits] = useState("");
+  const [cost, setCost] = useState("");
+  const [price, setPrice] = useState("");
+  
   const navigation = useNavigate();
+  const dispatch = useDispatch()
+
+
+  const addProductSubmit = () => {
+    let product = {name, code, category, brand, dimensions, description, units, cost, price}
+    addProduct(product)
+    //dispatch(setProductEdit({name:"", code:"", category:"", brand:"", dimensions:"", description:"", units:"", cost:"", price:""}))
+}
 
   return (
     <PageTemplate>
@@ -42,6 +62,8 @@ export default function NewProduct() {
                   id="product-name"
                   label="Nombre"
                   autoFocus
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </Grid>
 
@@ -52,6 +74,8 @@ export default function NewProduct() {
                   id="product-code"
                   label="Código"
                   name="product-code"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -61,6 +85,8 @@ export default function NewProduct() {
                   id="product-category"
                   label="Categoría"
                   name="product-category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -70,6 +96,8 @@ export default function NewProduct() {
                   name="product-brand"
                   label="Marca"
                   id="product-brand"
+                  value={brand}
+                  onChange={(e) => setBrand(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -79,6 +107,8 @@ export default function NewProduct() {
                   name="product-dimensions"
                   label="Dimensiones"
                   id="product-dimensions"
+                  value={dimensions}
+                  onChange={(e) => setDimensions(e.target.value)}
                 />
               </Grid>
 
@@ -89,6 +119,8 @@ export default function NewProduct() {
                   name="product-description"
                   label="Descripción"
                   id="product-description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </Grid>
 
@@ -101,6 +133,8 @@ export default function NewProduct() {
                   id="product-units"
                   type="number"
                   min="1"
+                  value={units}
+                  onChange={(e) => setUnits(e.target.value)}
                 />
               </Grid>
 
@@ -113,6 +147,8 @@ export default function NewProduct() {
                   id="product-cost"
                   type="number"
                   min="1"
+                  value={cost}
+                  onChange={(e) => setCost(e.target.value)}
                 />
               </Grid>
 
@@ -125,6 +161,8 @@ export default function NewProduct() {
                   id="product-price"
                   type="number"
                   min="1"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
                 />
               </Grid>
 
@@ -135,6 +173,7 @@ export default function NewProduct() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  onClick={addProductSubmit}
                 >
                   Guardar
                 </Button>
@@ -158,3 +197,10 @@ export default function NewProduct() {
     </PageTemplate>
   );
 }
+
+
+NewProduct.propTypes = {
+addProduct: PropTypes.func.isRequired,
+}
+
+export default NewProduct;

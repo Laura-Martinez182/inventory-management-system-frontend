@@ -7,10 +7,14 @@ import productsData from "../../data/products.json";
 import ProductRow from "./ProductRow";
 import { useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
+// import { useDispatch } from 'react-redux'
+// import axios from "../config/axios"
 
 function ProductsList() {
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState(productsData);
   const navigation = useNavigate();
+  // const dispatch = useDispatch()
+
 
   const renderProduct = () => {
     return product.map((product) => (

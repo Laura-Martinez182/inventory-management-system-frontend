@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -11,9 +11,28 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
+import PropTypes from 'prop-types'
 
-export default function NewUser() {
-    const navigation = useNavigate();
+
+function NewUser({addUser}) {
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [role, setRole] = useState("");
+  const [idDoc, setIdDoc] = useState("");
+  const [email, setEmail] = useState("");
+  const [tel, setTel] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+
+  const navigation = useNavigate();
+  const dispatch = useDispatch()
+
+
+  const addUserSubmit = () => {
+    let person = {name, lastname, role, idDoc, email, tel, birthdate}
+    addUser(person)
+    //dispatch(setPersonEdit({name:"", lastname:"", role:"", idDoc:"", email:"", tel:"", birthdate:""}))
+}
 
   return (
     <PageTemplate>
@@ -39,7 +58,8 @@ export default function NewUser() {
                   fullWidth
                   id="user-name"
                   label="Nombre"
-                  autoFocus
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </Grid>
 
@@ -50,6 +70,8 @@ export default function NewUser() {
                   id="user-lastname"
                   label="Apellido"
                   name="user-lastname"
+                  value={lastname}
+                  onChange={(e) => setLastname(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -59,6 +81,8 @@ export default function NewUser() {
                   id="user-role"
                   label="Rol"
                   name="user-role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
                 />
               </Grid>
 
@@ -70,6 +94,8 @@ export default function NewUser() {
                   name="user-idDoc"
                   label="Documento de identidad"
                   id="user-idDoc"
+                  value={idDoc}
+                  onChange={(e) => setIdDoc(e.target.value)}
                 />
               </Grid>
 
@@ -81,6 +107,8 @@ export default function NewUser() {
                   name="user-email"
                   label="Correo electrónico"
                   id="user-email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
 
@@ -93,12 +121,20 @@ export default function NewUser() {
                   id="user-tel"
                   type="number"
                   min="1"
+                  value={tel}
+                  onChange={(e) => setTel(e.target.value)}
                 />
               </Grid>
 
               <LocalizationProvider dateAdapter={AdapterDayjs} fullWidth>
                 <Grid item xs={12} sm={6}>
-                  <DatePicker sx={{ width: 250 }} />
+                  <DatePicker
+                    sx={{ width: 250 }}
+                    value={birthdate}
+                    label="Fecha de nacimiento"
+                    renderInput={(params) => <TextField {...params} />}
+                    onChange={(e) => setBirthdate(e.target.value)}
+                  />
                 </Grid>
               </LocalizationProvider>
             </Grid>
@@ -111,6 +147,7 @@ export default function NewUser() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  onClick={addUserSubmit}
                 >
                   Guardar
                 </Button>
@@ -134,3 +171,10 @@ export default function NewUser() {
     </PageTemplate>
   );
 }
+
+
+NewUser.propTypes = {
+  addUser: PropTypes.func.isRequired,
+};
+
+export default NewUser;
