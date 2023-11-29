@@ -13,31 +13,240 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Cookies from "js-cookie";
+import axios from "../../config/axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import dayjs from 'dayjs';
+import { clearUserEdit } from "../../redux/reducers/userEditSlice";
 
-function NewUser({ addUser }) {
+function NewUser() {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [document, setDocument] = useState("");
-  const [role, setRole] = useState("");
+  const [doc_type, setDocType] = useState("")
+  const [userRole, setUserRole] = useState("");
   const [email, setEmail] = useState("");
-  const [phone_number, setPhoneNumbre] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const [phone_number, setPhoneNumber] = useState("");
+  const [birthday, setBirthday] = useState(undefined);
+  const [pageIntent, setPageIntent] = useState("Nuevo Usuario")
+  const [roles, setRoles] = useState([]);
 
   const navigation = useNavigate();
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const addUserSubmit = () => {
-    let person = { name, lastname, role, idDoc, email, tel, birthdate };
-    addUser(person);
-    //dispatch(setPersonEdit({name:"", lastname:"", role:"", idDoc:"", email:"", tel:"", birthdate:""}))
+  const user = useSelector((state) => state.user.userEdit);
+
+  useEffect(() => {    
+    initializeFields();    
+    getRoles()
+  }, []);
+
+  const initializeFields = () => {
+    if (user !== undefined) {
+      setFirstName(user.first_name)
+      setLastName(user.last_name)
+      setDocument(user.document)
+      setDocType(user.doc_type)
+      setEmail(user.email)
+      setPhoneNumber(user.phone_number)
+      setBirthday(dayjs(user.birthday))
+
+      setPageIntent("Actualizar Usuario")
+      getUserRole(user.document)
+    }
+    else{
+      setPageIntent("Nuevo Usuario")
+    }
   };
+
+  const getRoles = async () => {
+    var token = Cookies.get("token-access");
+    let roles_list = []
+
+    var response = await axios.get("/groups/", {
+      headers: { authorization: "Bearer " + token },
+    });
+
+    response.data.forEach((role)=>{
+      roles_list.push(role)
+    })
+
+    setRoles(roles_list)
+  }
+
+  const getUserRole = async (document) => {
+    var token = Cookies.get("token-access");    
+
+    var response = await axios.get("/users/" + document + "/groups/", {
+      headers: { authorization: "Bearer " + token },
+    });
+
+    if(response.data.length == 0){
+      return
+    }
+
+    var role = response.data[0]
+
+    setUserRole(role.id)
+  }
+
+  const getRoleOptions = () => {
+    var options = []
+
+    roles.forEach(function (role){
+      options.push(<MenuItem value={role.id}>{role.name}</MenuItem>)
+    })
+
+    return options
+  }
+
+  const addUserSubmit = () => { 
+    if (user !== undefined) {
+      if(areFieldsOk()){
+          
+        let userUpdated = {
+          first_name: first_name,
+          last_name: last_name,
+          document: document,
+          doc_type: "CC",
+          email:email,
+          phone_number: phone_number,
+          birthday: birthday.format("YYYY-MM-DD"),
+        };  
+          
+        var token = Cookies.get("token-access");
+
+        try{
+          axios.patch("/users/"+user.document+"/", userUpdated, {
+            headers: { authorization: "Bearer " + token, },
+          }).then((response) =>{
+            if(response.status == 200){
+              toast.success("User modified succesfully", {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+              dispatch(clearUserEdit())
+              navigation("/user-list")
+            }
+            else{
+              toast.error("Error: " + response.status, {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+            }
+          }).catch((e)=>{
+            toast.error(e, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          })
+        }
+        catch(e){
+          toast.error(e.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+
+      }
+      else{
+        toast.error("Fields are not ok", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+      
+    } else {
+      if(areFieldsOk()){
+        let userUpdated = {
+          first_name: first_name,
+          last_name: last_name,
+          document: document,
+          password:"password",
+          doc_type: "CC",
+          email:email,
+          phone_number: phone_number,
+          birthday: birthday.format("YYYY-MM-DD"),
+        };  
+          
+        var token = Cookies.get("token-access");
+
+        axios.post("/users/", userUpdated, {
+          headers: { authorization: "Bearer " + token, },
+        }).then((response) =>{
+          if(response.status == 201){
+            toast.success("User added succesfully", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+            dispatch(clearUserEdit())
+            navigation("/user-list")
+          }
+          else{
+            toast.error("Error: " + response.status, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }
+        }).catch((e)=>{
+          toast.error(e, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        })
+
+      }
+      else{
+        toast.error("Fields are not ok", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    }
+  };
+
+  const areFieldsOk = () => {
+    var isOk = true
+
+    if (first_name == "" || last_name == ""){
+      isOk = false
+      toast.error("Se requiere el nombre completo", {
+        position: toast.POSITION.TOP_RIGHT,
+      });}
+
+    if (document == ""){
+      isOk = false
+      toast.error("El número de documento es obligatorio", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+
+    if (email == ""){
+      isOk = false
+      toast.error("El email es obligatorio", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+
+    if (phone_number == ""){
+      isOk = false
+      toast.error("El número de celular es obligatorio", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+
+    if (birthday === undefined){
+      isOk = false
+      toast.error("El número de celular es obligatorio", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+
+    return isOk
+  }
 
   return (
     <PageTemplate>
       <Container className="bg-white rounded shadow-md text-slate-800 shadow-slate-200 mb-10">
         <CssBaseline />
         <div className="p-6">
-          <h1 className="text-4xl font-bold text-left m-5">Nuevo usuario</h1>
+          <h1 className="text-4xl font-bold text-left m-5">{pageIntent}</h1>
           <Divider />
         </div>
         <Box
@@ -56,8 +265,8 @@ function NewUser({ addUser }) {
                   fullWidth
                   id="user-name"
                   label="Nombre"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={first_name}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </Grid>
 
@@ -68,20 +277,24 @@ function NewUser({ addUser }) {
                   id="user-lastname"
                   label="Apellido"
                   name="user-lastname"
-                  value={lastname}
-                  onChange={(e) => setLastname(e.target.value)}
+                  value={last_name}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="user-role"
-                  label="Rol"
-                  name="user-role"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                />
+                <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <InputLabel>Rol</InputLabel>
+                      <Select
+                        key="select-user-role"
+                        label="Role"
+                        value = {userRole}
+                        onChange={(e) => setUserRole(e.target.value)}
+                      >
+                        {getRoleOptions()}
+                      </Select>
+                    </FormControl>
+                  </Box>
               </Grid>
 
               <Grid item xs={12} sm={6}>
@@ -90,10 +303,10 @@ function NewUser({ addUser }) {
                   fullWidth
                   type="number"
                   name="user-idDoc"
-                  label="Documento de identidad"
+                  label="Documento"
                   id="user-idDoc"
-                  value={idDoc}
-                  onChange={(e) => setIdDoc(e.target.value)}
+                  value={document}
+                  onChange={(e) => setDocument(e.target.value)}
                 />
               </Grid>
 
@@ -119,18 +332,17 @@ function NewUser({ addUser }) {
                   id="user-tel"
                   type="number"
                   min="1"
-                  value={tel}
-                  onChange={(e) => setTel(e.target.value)}
+                  value={phone_number}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     sx={{ width: 565 }}
-                    value={birthdate}
+                    value={birthday}
                     label="Fecha de nacimiento"
-                    renderInput={(params) => <TextField {...params} />}
-                    onChange={(e) => setBirthdate(e.target.value)}
+                    onChange={(e) => setBirthday(dayjs(e))}
                   />
                 </LocalizationProvider>
               </Grid>
@@ -139,7 +351,6 @@ function NewUser({ addUser }) {
               <Grid item xs={12} sm={6}>
                 <Button
                   color="success"
-                  type="submit"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}

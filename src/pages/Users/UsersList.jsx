@@ -44,12 +44,47 @@ function UsersList() {
     navigation("/new-user");
   };
 
-  const renderUsers = () => {
-    return users.map((user) => (
+  const onDeleteUser = async (document) => {
+    try{
+      var token = Cookies.get("token-access");
+
+      axios.delete("/users/"+document+"/", {
+        headers: { authorization: "Bearer " + token },
+      }).then((response) => {
+        if(response.status == 200 || response.status == 204){     
+          navigation(0)     
+          /*toast.success("Product removed succesfully", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          */          
+        }
+        else{
+          toast.warning("Unexpected result:" + response.status, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      }).catch((e) => {
+        toast.error(e.response.data.detail, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      })
+
+    }
+    catch(e){
+      toast.error(e.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+
+    }
+  }
+
+  const renderUsers = () => {    return users.map((user) => (
+      
       <UserRow
-        key={user.id}
+        key={user.document}
         user={user}
         onEditUser={onEditUser}
+        onDeleteUser={onDeleteUser}
       />
     ));
   };
@@ -92,19 +127,25 @@ function UsersList() {
               <thead className="text-xs text-gray-900 uppercase bg-emerald-50">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    ID
-                  </th>
-                  <th scope="col" className="px-6 py-3">
                     Nombre
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Apellido
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Rol
+                    Documento
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Correo
+                    Tipo
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    E-mail
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Celular
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Fecha de nacimiento
                   </th>
                 </tr>
               </thead>

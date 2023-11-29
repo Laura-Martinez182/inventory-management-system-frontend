@@ -45,15 +45,14 @@ function NewMovement() {
   }, []);
 
   const initializeFields = () => {
+    var token = Cookies.get("token-access");    
+    var decoded = jwtDecode(token);      
+
+    console.log(decoded["document"])
+
+    setUser(decoded["document"])
     if (movement !== undefined) {
       setProductId(movement.product_id)
-
-      var token = Cookies.get("token-access");    
-      var decoded = jwtDecode(token);      
-
-      console.log(decoded["document"])
-
-      setUser(decoded["document"])
       setDate(dayjs(movement.date))
       setDescription(movement.description)
       setUnits(movement.units)

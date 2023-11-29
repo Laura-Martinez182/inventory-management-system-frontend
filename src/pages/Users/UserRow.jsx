@@ -11,7 +11,6 @@ function UserRow({ user, onDeleteUser, onEditUser }) {
       <td className={style.rowStyle}>{user.last_name}</td>
       <td className={style.rowStyle}>{user.document}</td>
       <td className={style.rowStyle}>{user.doc_type}</td>
-      <td className={style.rowStyle}>{user.role}</td>
       <td className={style.rowStyle}>{user.email}</td>
       <td className={style.rowStyle}>{user.phone_number}</td>
       <td className={style.rowStyle}>{user.birthday}</td>
@@ -19,7 +18,7 @@ function UserRow({ user, onDeleteUser, onEditUser }) {
         <DeleteRoundedIcon
           sx={{ color: red[500] }}
           onClick={() => {
-            onDeleteUser(user.id);
+            onDeleteUser(user.document);
           }}
         />
       </IconButton>

@@ -36,7 +36,7 @@ function Login() {
         if(response.status == 200){
           var token_pair = response.data
 
-          Cookies.set('token-access',token_pair.access,{expires:0.01,secure:true})
+          Cookies.set('token-access',token_pair.access,{expires:0.125,secure:true})
           Cookies.set('token-refresh',token_pair.refresh,{expires:1,secure:true})
 
           navigate("/product-list")
