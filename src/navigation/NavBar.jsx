@@ -33,7 +33,6 @@ const NavBar = () => {
         <CssBaseline />
         <AppBar
           position="fixed"
-          open={open}
           color="default"
           elevation={0}
           sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}

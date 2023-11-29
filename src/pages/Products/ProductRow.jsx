@@ -14,12 +14,13 @@ function ProductRow({ product, onEditProduct }) {
       <td className={style.rowStyle}>{product.unitsAvailable}</td>
       <td className={style.rowStyle}>{product.category}</td>
       <td className={style.rowStyle}>{product.brand}</td>
-      <IconButton aria-label="edit">
+      <IconButton aria-label="edit" 
+      onClick={() => {
+        onEditProduct(product);
+      }}>
         <EditRoundedIcon
           sx={{ color: green[500] }}
-          onClick={() => {
-            onEditProduct(product);
-          }}
+
         />
       </IconButton>
     </tr>

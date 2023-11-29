@@ -11,11 +11,11 @@ import Divider from "@mui/material/Divider";
 import Cookies from "js-cookie";
 import axios from "../../config/axios";
 import { useDispatch } from "react-redux";
-import { setProductEdit } from "../../redux/reducers/productEditSlice";
+import { setProductEdit, clearProductEdit } from "../../redux/reducers/productEditSlice";
 import Grid from "@mui/material/Grid";
 
 function ProductsList() {
-  const [product, setProduct] = useState(productsData);
+  const [products, setProducts] = useState(productsData);
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ function ProductsList() {
       headers: { authorization: "Bearer " + token },
     });
 
-    setProduct(response.data);
+    setProducts(response.data);
     console.log(response.data);
   };
 
@@ -35,8 +35,13 @@ function ProductsList() {
     navigation("/new-product");
   };
 
+  const onButtonAddProductClick = () => {
+    dispatch(clearProductEdit());
+    navigation("/new-product")
+  }
+
   const renderProduct = () => {
-    return product.map((product) => (
+    return products.map((product) => (
       <ProductRow
         key={product.code}
         product={product}
@@ -53,18 +58,17 @@ function ProductsList() {
     <PageTemplate>
       <div className=" bg-white rounded shadow-md text-slate-800 shadow-slate-200 mb-10">
         <div className="p-6">
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={8}>
+          <Grid container spacing={3} alignItems="center" justifyContent="center">
+            <Grid item xs={8} sm={8}>
               <h1 className="text-4xl font-bold text-left m-5">
                 Lista de productos
               </h1>
             </Grid>
-
-            <Grid xs={12} sm={4} padding={6}>
+            <Grid item xs={4} sm={4}>
               <Button
                 color="success"
                 variant="contained"
-                onClick={() => navigation("/new-product")}
+                onClick={() => onButtonAddProductClick()}
               >
                 Agregar producto
               </Button>
@@ -113,9 +117,5 @@ function ProductsList() {
     </PageTemplate>
   );
 }
-
-ProductsList.propTypes = {
-  product: PropTypes.object.isRequired,
-};
 
 export default ProductsList;
