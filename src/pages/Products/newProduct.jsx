@@ -10,6 +10,7 @@ import PageTemplate from "../../components/PageTemplate";
 import Divider from "@mui/material/Divider";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { setProductEdit, clearProductEdit } from "../../redux/reducers/productEditSlice";
 import axios from "../../config/axios";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,7 +33,9 @@ function NewProduct() {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [pageIntent, setPageIntent] = useState("Nuevo producto")
+  
   const navigation = useNavigate();
+  const dispatch = useDispatch();
 
   const product = useSelector((state) => state.product.productEdit);
 
@@ -44,7 +47,6 @@ function NewProduct() {
 
   const initializeFields = () => {
     if (product !== undefined) {
-      console.log(product)
       setName(product.name);
       setCode(product.code);
       setCategory(product.category_id);
@@ -156,25 +158,7 @@ function NewProduct() {
 
     return isOk
   }
-/*
-  const getCategoryName = (id) => {
-    categories.forEach((category) => {
-      if (category.id == id){
-        return category.name
-      }      
-    })
-    return undefined
-  }
-
-  const getBrandName = (id) => {
-    brands.forEach((brand) => {
-      if (brand.id == id){
-        return brand.name
-      }      
-    })
-    return undefined
-  }
-*/
+  
   const onSubmit = async () => {  
     if (product !== undefined) {
       if(areFieldsOk()){
@@ -202,6 +186,7 @@ function NewProduct() {
               toast.success("Product modified succesfully", {
                 position: toast.POSITION.TOP_RIGHT,
               });
+              dispatch(clearProductEdit())
               navigation("/product-list")
             }
             else{
@@ -250,6 +235,7 @@ function NewProduct() {
             toast.success("Product added succesfully", {
               position: toast.POSITION.TOP_RIGHT,
             });
+            dispatch(clearProductEdit())
             navigation("/product-list")
           }
           else{
@@ -433,7 +419,9 @@ function NewProduct() {
                   <Grid item xs={12} sm={6}>
                     <Button
                       color="error"
-                      onClick={() => navigation("/product-list")}
+                      onClick={() => {
+                        navigation("/product-list")
+                        dispatch(clearProductEdit())}}
                       fullWidth
                       variant="outlined"
                       sx={{ mt: 3, mb: 2 }}

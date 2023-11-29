@@ -7,26 +7,24 @@ import { red, green } from "@mui/material/colors";
 function MovementRow({ movement, onDeleteMovement, onEditMovement }) {
   return (
     <tr>
-      <td className={style.rowStyle}>{movement.name}</td>
-      <td className={style.rowStyle}>{movement.date}</td>
+      <td className={style.rowStyle}>{movement.id}</td>      
+      <td className={style.rowStyle}>{movement.user}</td>
+      <td className={style.rowStyle}>{movement.product}</td>
       <td className={style.rowStyle}>{movement.description}</td>
-      <td className={style.rowStyle}>{movement.type}</td>
+      <td className={style.rowStyle}>{movement.date}</td>
       <td className={style.rowStyle}>{movement.units}</td>
-      <IconButton aria-label="delete">
-        <DeleteRoundedIcon
-          sx={{ color: red[500] }}
-          onClick={() => {
-            onDeleteMovement(movement.code);
-          }}
-        />
+      <td className={style.rowStyle}>{movement.movType}</td>
+      <IconButton aria-label="delete"
+                onClick={() => {
+                  onDeleteMovement(movement.id);
+                }}>
+        <DeleteRoundedIcon sx={{ color: red[500] }}/>
       </IconButton>
-      <IconButton aria-label="edit">
-        <EditRoundedIcon
-          sx={{ color: green[500] }}
-          onClick={() => {
-            onEditMovement(movement);
-          }}
-        />
+      <IconButton aria-label="edit"
+                onClick={() => {
+                  onEditMovement(movement);
+                }}>
+        <EditRoundedIcon sx={{ color: green[500] }} />
       </IconButton>
     </tr>
   );

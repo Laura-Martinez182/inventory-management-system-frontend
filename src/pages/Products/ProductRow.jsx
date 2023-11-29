@@ -29,7 +29,6 @@ function ProductRow({ product, onEditProduct }) {
 
 ProductRow.propTypes = {
   product: PropTypes.object.isRequired,
-  onDeleteProduct: PropTypes.func.isRequired,
   onEditProduct: PropTypes.func.isRequired,
 };
 
