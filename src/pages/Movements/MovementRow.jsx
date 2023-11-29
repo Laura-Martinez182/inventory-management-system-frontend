@@ -4,19 +4,19 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import PropTypes from "prop-types";
 import { red, green } from "@mui/material/colors";
 
-function UserRow({ user, onDeleteUser, onEditUser }) {
+function MovementRow({ movement, onDeleteMovement, onEditMovement }) {
   return (
     <tr>
-      <td className={style.rowStyle}>{user.id}</td>
-      <td className={style.rowStyle}>{user.name}</td>
-      <td className={style.rowStyle}>{user.lastname}</td>
-      <td className={style.rowStyle}>{user.role}</td>
-      <td className={style.rowStyle}>{user.email}</td>
+      <td className={style.rowStyle}>{movement.name}</td>
+      <td className={style.rowStyle}>{movement.date}</td>
+      <td className={style.rowStyle}>{movement.description}</td>
+      <td className={style.rowStyle}>{movement.type}</td>
+      <td className={style.rowStyle}>{movement.units}</td>
       <IconButton aria-label="delete">
         <DeleteRoundedIcon
           sx={{ color: red[500] }}
           onClick={() => {
-            onDeleteUser(user.id);
+            onDeleteMovement(movement.code);
           }}
         />
       </IconButton>
@@ -24,7 +24,7 @@ function UserRow({ user, onDeleteUser, onEditUser }) {
         <EditRoundedIcon
           sx={{ color: green[500] }}
           onClick={() => {
-            onEditUser(user);
+            onEditMovement(movement);
           }}
         />
       </IconButton>
@@ -32,10 +32,10 @@ function UserRow({ user, onDeleteUser, onEditUser }) {
   );
 }
 
-UserRow.propTypes = {
-  user: PropTypes.object.isRequired,
-  onDeleteUser: PropTypes.func.isRequired,
-  onEditUser: PropTypes.func.isRequired,
+MovementRow.propTypes = {
+  movement: PropTypes.object.isRequired,
+  onDeleteMovement: PropTypes.func.isRequired,
+  onEditMovement: PropTypes.func.isRequired,
 };
 
 const style = {
@@ -43,4 +43,4 @@ const style = {
     "h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500",
 };
 
-export default UserRow;
+export default MovementRow;

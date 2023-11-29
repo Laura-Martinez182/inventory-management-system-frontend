@@ -4,6 +4,7 @@ import NewProduct from "../pages/Products/newProduct.jsx";
 import ProductsList from "../pages/Products/productsList.jsx";
 import NewUser from "../pages/Users/NewUser.jsx";
 import UsersList from "../pages/Users/UsersList.jsx";
+import MovemenstList from "../pages/Movements/MovementsList.jsx";
 import NewMovement from "../pages/Movements/NewMovements.jsx";
 
 const Router = () => (
@@ -14,7 +15,8 @@ const Router = () => (
       <Route path="/new-product" element={<NewProduct/>} />
       <Route path="/user-list" element={<UsersList/>} />
       <Route path="/new-user" element={<NewUser/>} />
-      <Route path="/inventory" element={<NewMovement />} />
+      <Route path="/inventory" element={<MovemenstList/>} />
+      <Route path="/new-movement" element={<NewMovement/>} />
     </Routes>
   </BrowserRouter>
 );

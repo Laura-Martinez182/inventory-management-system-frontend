@@ -11,7 +11,6 @@ import Divider from "@mui/material/Divider";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -116,18 +115,18 @@ function NewMovement({ addMovement }) {
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
                 >
                   <FormControlLabel
-                    value={type}
+                    value={"Entrada"}
                     control={<Radio />}
                     label="Entrada"
-                    onClick={(e) => setType(e.target.value)}
                   />
                   <FormControlLabel
-                    value={type}
+                    value={"Salida"}
                     control={<Radio />}
                     label="Salida"
-                    onClick={(e) => setType(e.target.value)}
                   />
                 </RadioGroup>
               </Grid>
