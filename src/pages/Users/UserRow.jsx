@@ -7,11 +7,14 @@ import { red, green } from "@mui/material/colors";
 function UserRow({ user, onDeleteUser, onEditUser }) {
   return (
     <tr>
-      <td className={style.rowStyle}>{user.id}</td>
-      <td className={style.rowStyle}>{user.name}</td>
-      <td className={style.rowStyle}>{user.lastname}</td>
+      <td className={style.rowStyle}>{user.first_name}</td>
+      <td className={style.rowStyle}>{user.last_name}</td>
+      <td className={style.rowStyle}>{user.document}</td>
+      <td className={style.rowStyle}>{user.doc_type}</td>
       <td className={style.rowStyle}>{user.role}</td>
       <td className={style.rowStyle}>{user.email}</td>
+      <td className={style.rowStyle}>{user.phone_number}</td>
+      <td className={style.rowStyle}>{user.birthday}</td>
       <IconButton aria-label="delete">
         <DeleteRoundedIcon
           sx={{ color: red[500] }}

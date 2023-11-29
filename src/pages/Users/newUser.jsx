@@ -15,13 +15,13 @@ import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 function NewUser({ addUser }) {
-  const [name, setName] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [document, setDocument] = useState("");
   const [role, setRole] = useState("");
-  const [idDoc, setIdDoc] = useState("");
   const [email, setEmail] = useState("");
-  const [tel, setTel] = useState("");
-  const [birthdate, setBirthdate] = useState("");
+  const [phone_number, setPhoneNumbre] = useState("");
+  const [birthday, setBirthday] = useState("");
 
   const navigation = useNavigate();
   // const dispatch = useDispatch()

@@ -7,16 +7,83 @@ import UserRow from "./UserRow";
 import { useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import axios from "../../config/axios";
+import MovementRow from "./MovementRow"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from "react-redux";
+import { setUserEdit, clearUserEdit } from "../../redux/reducers/userEditSlice";
 
 function UsersList() {
-  const [user, setUser] = useState([]);
+  const [users, setUsers] = useState([]);
   const navigation = useNavigate();
+  const dispatch = useDispatch();
+  
+  const getUsers = async () => {
+    try{
+      var token = Cookies.get("token-access");
 
-  // const renderProduct = () => {
-  //   return product.map((product) => (
-  //     <ProductRow key={product.id} product={product} />
-  //   ));
-  // };
+      axios.get("/users/", {
+        headers: { authorization: "Bearer " + token },
+      }).then((response) => {
+
+        let users_tmp = response.data
+        let users_final = []
+
+        users_tmp.forEach(user => {
+
+
+          axios.get("users/"+user.document+"/groups/", {
+            headers: { authorization: "Bearer " + token },
+          }).then((response) => {
+            //create object with same parameters plus the role
+          })
+
+
+          var user_final = {}
+        });
+        
+
+        setUsers(response.data);
+      }).catch((e) => {
+        toast.error(e.response.data.detail, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      })      
+    }
+    catch(e){
+      toast.error(e.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
+  const onEditUser = (user) => {
+    dispatch(setUserEdit(user));
+    navigation("/new-user");
+  };
+
+  const onButtonAddProductClick = () => {
+    dispatch(clearProductEdit());
+    navigation("/new-user")
+  }
+
+  const renderUser = () => {
+    return users.map((user) => (
+      <UserRow
+        key={user.id}
+        user={user}
+        onEditUser={onEditUser}
+      />
+    ));
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <PageTemplate>
