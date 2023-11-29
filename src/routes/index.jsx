@@ -6,6 +6,8 @@ import NewUser from "../pages/Users/NewUser.jsx";
 import UsersList from "../pages/Users/UsersList.jsx";
 import MovemenstList from "../pages/Movements/MovementsList.jsx";
 import NewMovement from "../pages/Movements/NewMovements.jsx";
+import Reports from "../pages/Reports/Reports.jsx";
+import ChartLine from "../pages/Reports/LineChart.jsx";
 
 const Router = () => (
   <BrowserRouter>
@@ -17,6 +19,10 @@ const Router = () => (
       <Route path="/new-user" element={<NewUser/>} />
       <Route path="/inventory" element={<MovemenstList/>} />
       <Route path="/new-movement" element={<NewMovement/>} />
+      <Route path="/reports" element={<Reports/>} />
+      <Route path="/line-chart" element={<ChartLine/>} />
+      <Route path="/bar-chart" element={<ChartLine/>} />
+      <Route path="/pie-chart" element={<ChartLine/>} />
     </Routes>
   </BrowserRouter>
 );

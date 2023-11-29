@@ -8,7 +8,6 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import PageTemplate from "../../components/PageTemplate";
 import Divider from "@mui/material/Divider";
-import AddImageInput from "../../components/AddImageInput";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../config/axios";
