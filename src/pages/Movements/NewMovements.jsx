@@ -42,7 +42,7 @@ function NewMovement({ addMovement }) {
       <Container className="bg-white rounded shadow-md text-slate-800 shadow-slate-200">
         <CssBaseline />
         <div className="p-6">
-          <h1 className="text-3xl font-bold text-left m-5">
+          <h1 className="text-4xl font-bold text-left m-5">
             Movimiento de inventario
           </h1>
           <Divider />

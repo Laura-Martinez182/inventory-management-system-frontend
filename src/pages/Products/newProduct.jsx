@@ -11,8 +11,7 @@ import Divider from "@mui/material/Divider";
 import AddImageInput from "../../components/AddImageInput";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from '../../config/axios';
-
+import axios from "../../config/axios";
 
 function NewProduct({ addProduct }) {
   const [name, setName] = useState("");
@@ -24,43 +23,40 @@ function NewProduct({ addProduct }) {
   const [units, setUnits] = useState(0);
   const [cost, setCost] = useState(0.0);
   const [price, setPrice] = useState(0.0);
-  const [categories, setCategories] = useState([])
-  const [brands, setBrands] = useState([])
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
   const navigation = useNavigate();
 
-  const product = useSelector((state) => state.product.productEdit)
-  
-  useEffect(() => {initializeFields()},[])
+  const product = useSelector((state) => state.product.productEdit);
+
+  useEffect(() => {
+    initializeFields();
+  }, []);
 
   const initializeFields = () => {
-
     //traerse las opciones del back y setearlas en selects
     //cada cosa está asociada con id, y mandar el post/put con ese id
-    
 
-
-    if (product != null){
-      setName(product.name)
-      setCode(product.code)
-      setCategory(product.category)
-      setDimensions(product.dimensions)
-      setBrand(product.brand)
-      setUnits(product.unitsAvailable)
-      setCost(product.cost)
-      setPrice(product.sellingPrice)
-      setDescription(product.description)
+    if (product != null) {
+      setName(product.name);
+      setCode(product.code);
+      setCategory(product.category);
+      setDimensions(product.dimensions);
+      setBrand(product.brand);
+      setUnits(product.unitsAvailable);
+      setCost(product.cost);
+      setPrice(product.sellingPrice);
+      setDescription(product.description);
     }
-  }
+  };
 
   const onSubmit = () => {
-    if(product != null){
+    if (product != null) {
       //edit
-    }
-    else{
+    } else {
       //add
     }
-  }
-
+  };
 
   // const dispatch = useDispatch()
 
@@ -85,7 +81,7 @@ function NewProduct({ addProduct }) {
       <Container className="bg-white rounded shadow-md text-slate-800 shadow-slate-200">
         <CssBaseline />
         <div className="p-6">
-          <h1 className="text-3xl	font-bold text-left m-5">Nuevo producto</h1>
+          <h1 className="text-4xl	font-bold text-left m-5">Nuevo producto</h1>
           <Divider />
         </div>
         <Box
@@ -97,10 +93,6 @@ function NewProduct({ addProduct }) {
         >
           <Box component="form" noValidate sx={{ m: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <AddImageInput />
-              </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   name="product-name"

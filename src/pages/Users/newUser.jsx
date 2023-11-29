@@ -37,7 +37,7 @@ function NewUser({ addUser }) {
       <Container className="bg-white rounded shadow-md text-slate-800 shadow-slate-200 mb-10">
         <CssBaseline />
         <div className="p-6">
-          <h1 className="text-3xl font-bold text-left m-5">Nuevo usuario</h1>
+          <h1 className="text-4xl font-bold text-left m-5">Nuevo usuario</h1>
           <Divider />
         </div>
         <Box

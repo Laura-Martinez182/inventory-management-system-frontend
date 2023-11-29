@@ -9,65 +9,69 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Divider from "@mui/material/Divider";
 import Cookies from "js-cookie";
-import axios from '../../config/axios';
-import { useDispatch } from "react-redux"
+import axios from "../../config/axios";
+import { useDispatch } from "react-redux";
 import { setProductEdit } from "../../redux/reducers/productEditSlice";
+import Grid from "@mui/material/Grid";
 
 function ProductsList() {
   const [product, setProduct] = useState(productsData);
   const navigation = useNavigate();
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
 
   const getProducts = async () => {
-    var token = Cookies.get('token-access')    
+    var token = Cookies.get("token-access");
 
-    var response = await axios.get('/products/',{headers:{"authorization":("Bearer " + token)}})
+    var response = await axios.get("/products/", {
+      headers: { authorization: "Bearer " + token },
+    });
 
-    setProduct(response.data)
-    console.log(response.data)
-  }
+    setProduct(response.data);
+    console.log(response.data);
+  };
 
-  const onEditProduct = (product) => {    
-    dispatch(setProductEdit(product))
-    navigation("/new-product")
-  }
+  const onEditProduct = (product) => {
+    dispatch(setProductEdit(product));
+    navigation("/new-product");
+  };
 
   const renderProduct = () => {
-
     return product.map((product) => (
-      <ProductRow key={product.code} product={product} onEditProduct={onEditProduct} />
+      <ProductRow
+        key={product.code}
+        product={product}
+        onEditProduct={onEditProduct}
+      />
     ));
   };
 
-  useEffect(() => {getProducts()},[])
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <PageTemplate>
       <div className=" bg-white rounded shadow-md text-slate-800 shadow-slate-200 mb-10">
         <div className="p-6">
-          <h1 className="text-3xl	font-bold text-left m-5">
-            Lista de productos
-          </h1>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={8}>
+              <h1 className="text-4xl font-bold text-left m-5">
+                Lista de productos
+              </h1>
+            </Grid>
+
+            <Grid xs={12} sm={4} padding={6}>
+              <Button
+                color="success"
+                variant="contained"
+                onClick={() => navigation("/new-product")}
+              >
+                Agregar producto
+              </Button>
+            </Grid>
+          </Grid>
           <Divider />
         </div>
-        <Box
-          sx={{
-            my: 5,
-            mx: 4,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            color="success"
-            variant="contained"
-            onClick={() => navigation("/new-product")}
-          >
-            Agregar producto
-          </Button>
-        </Box>
 
         <div className="relative shadow-md sm:rounded-lg overflow-y-auto p-6">
           <table

@@ -3,10 +3,10 @@ import { useState } from "react";
 import PageTemplate from "../../components/PageTemplate";
 import { Box, Button } from "@mui/material";
 import PropTypes from "prop-types";
-import productsData from "../../data/products.json";
 import UserRow from "./UserRow";
 import { useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
 
 function UsersList() {
   const [user, setUser] = useState([]);
@@ -22,26 +22,25 @@ function UsersList() {
     <PageTemplate>
       <div className=" bg-white rounded shadow-md text-slate-800 shadow-slate-200 mb-10">
         <div className="p-6">
-          <h1 className="text-3xl	font-bold text-left m-5">Lista de usuarios</h1>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={8}>
+              <h1 className="text-4xl font-bold text-left m-5">
+                Lista de usuarios
+              </h1>
+            </Grid>
+
+            <Grid xs={12} sm={4} padding={6}>
+              <Button
+                color="success"
+                variant="contained"
+                onClick={() => navigation("/new-user")}
+              >
+                Agregar usuario
+              </Button>
+            </Grid>
+          </Grid>
           <Divider />
         </div>
-        <Box
-          sx={{
-            my: 5,
-            mx: 4,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            color="success"
-            variant="contained"
-            onClick={() => navigation("/new-user")}
-          >
-            Agregar usuario
-          </Button>
-        </Box>
 
         <div className="relative shadow-md sm:rounded-lg overflow-y-auto p-6">
           <table
