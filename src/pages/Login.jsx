@@ -8,9 +8,27 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useState } from "react";
+import axios from '../config/axios'
+import Cookies from 'js-cookie';
+
 function Login() {
-  // const [email, setEmail] = useState();
-  // const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const login = async () => {
+    try {
+      const response = await axios.post('/login/',{email:email,password:password})
+      
+      console.log(response.data)
+
+      //Cookies.set('token')
+    } 
+    catch (e) {
+      console.log(e)
+    }
+    dispatch(setPersonEdit({id:"",name:"",username:"",email:""}))
+  }
 
   return (
     <Grid container sx={{ height: "100vh", width: "100vw" }}>
@@ -54,6 +72,7 @@ function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -64,11 +83,12 @@ function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
+              onClick={(e)=>login()}
               sx={{
                 mt: 3,
                 mb: 2,
