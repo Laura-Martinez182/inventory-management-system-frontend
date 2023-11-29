@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -10,7 +10,7 @@ import PageTemplate from "../../components/PageTemplate";
 import Divider from "@mui/material/Divider";
 import AddImageInput from "../../components/AddImageInput";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 
 function NewProduct({ addProduct }) {
   const [name, setName] = useState("");
@@ -22,16 +22,25 @@ function NewProduct({ addProduct }) {
   const [units, setUnits] = useState("");
   const [cost, setCost] = useState("");
   const [price, setPrice] = useState("");
-  
-  const navigation = useNavigate();
-  const dispatch = useDispatch()
 
+  const navigation = useNavigate();
+  // const dispatch = useDispatch()
 
   const addProductSubmit = () => {
-    let product = {name, code, category, brand, dimensions, description, units, cost, price}
-    addProduct(product)
+    let product = {
+      name,
+      code,
+      category,
+      brand,
+      dimensions,
+      description,
+      units,
+      cost,
+      price,
+    };
+    addProduct(product);
     //dispatch(setProductEdit({name:"", code:"", category:"", brand:"", dimensions:"", description:"", units:"", cost:"", price:""}))
-}
+  };
 
   return (
     <PageTemplate>
@@ -166,29 +175,31 @@ function NewProduct({ addProduct }) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
-                <Button
-                  color="success"
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={addProductSubmit}
-                >
-                  Guardar
-                </Button>
-              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <Button
+                    color="success"
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={addProductSubmit}
+                  >
+                    Guardar
+                  </Button>
+                </Grid>
 
-              <Grid item xs={12} sm={6}>
-                <Button
-                  color="error"
-                  onClick={() => navigation("/product-list")}
-                  fullWidth
-                  variant="outlined"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Cancelar
-                </Button>
+                <Grid item xs={12} sm={6}>
+                  <Button
+                    color="error"
+                    onClick={() => navigation("/product-list")}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Cancelar
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </Box>
@@ -198,9 +209,8 @@ function NewProduct({ addProduct }) {
   );
 }
 
-
 NewProduct.propTypes = {
-addProduct: PropTypes.func.isRequired,
-}
+  addProduct: PropTypes.func.isRequired,
+};
 
 export default NewProduct;

@@ -11,11 +11,10 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux"
-import PropTypes from 'prop-types'
+import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
-
-function NewUser({addUser}) {
+function NewUser({ addUser }) {
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [role, setRole] = useState("");
@@ -25,14 +24,13 @@ function NewUser({addUser}) {
   const [birthdate, setBirthdate] = useState("");
 
   const navigation = useNavigate();
-  const dispatch = useDispatch()
-
+  // const dispatch = useDispatch()
 
   const addUserSubmit = () => {
-    let person = {name, lastname, role, idDoc, email, tel, birthdate}
-    addUser(person)
+    let person = { name, lastname, role, idDoc, email, tel, birthdate };
+    addUser(person);
     //dispatch(setPersonEdit({name:"", lastname:"", role:"", idDoc:"", email:"", tel:"", birthdate:""}))
-}
+  };
 
   return (
     <PageTemplate>
@@ -125,20 +123,18 @@ function NewUser({addUser}) {
                   onChange={(e) => setTel(e.target.value)}
                 />
               </Grid>
-
-              <LocalizationProvider dateAdapter={AdapterDayjs} fullWidth>
-                <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                    sx={{ width: 250 }}
+                    sx={{ width: 565 }}
                     value={birthdate}
                     label="Fecha de nacimiento"
                     renderInput={(params) => <TextField {...params} />}
                     onChange={(e) => setBirthdate(e.target.value)}
                   />
-                </Grid>
-              </LocalizationProvider>
+                </LocalizationProvider>
+              </Grid>
             </Grid>
-
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Button
@@ -171,7 +167,6 @@ function NewUser({addUser}) {
     </PageTemplate>
   );
 }
-
 
 NewUser.propTypes = {
   addUser: PropTypes.func.isRequired,
