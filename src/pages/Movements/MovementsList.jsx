@@ -3,13 +3,11 @@ import { useState } from "react";
 import PageTemplate from "../../components/PageTemplate";
 import { Box, Button } from "@mui/material";
 import PropTypes from "prop-types";
-import productsData from "../../data/products.json";
-import UserRow from "./UserRow";
 import { useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 
-function UsersList() {
-  const [user, setUser] = useState([]);
+function MovementsList() {
+  const [movement, setMovement] = useState([]);
   const navigation = useNavigate();
 
   // const renderProduct = () => {
@@ -22,7 +20,7 @@ function UsersList() {
     <PageTemplate>
       <div className=" bg-white rounded shadow-md text-slate-800 shadow-slate-200 mb-10">
         <div className="p-6">
-          <h1 className="text-3xl	font-bold text-left m-5">Lista de usuarios</h1>
+          <h1 className="text-3xl font-bold text-left m-5">Lista de movimientos</h1>
           <Divider />
         </div>
         <Box
@@ -37,9 +35,9 @@ function UsersList() {
           <Button
             color="success"
             variant="contained"
-            onClick={() => navigation("/new-user")}
+            onClick={() => navigation("/new-movement")}
           >
-            Agregar usuario
+            Agregar movimiento
           </Button>
         </Box>
 
@@ -51,19 +49,19 @@ function UsersList() {
             <thead className="text-xs text-gray-900 uppercase bg-emerald-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  ID
-                </th>
-                <th scope="col" className="px-6 py-3">
                   Nombre
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Apellido
+                  Fecha
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Rol
+                  Descripción
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Correo
+                  Tipo de movimiento
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Unidades
                 </th>
               </tr>
             </thead>
@@ -75,8 +73,8 @@ function UsersList() {
   );
 }
 
-UsersList.propTypes = {
-  user: PropTypes.object.isRequired,
+MovementsList.propTypes = {
+    movement: PropTypes.object.isRequired,
 };
 
-export default UsersList;
+export default MovementsList;
