@@ -114,7 +114,7 @@ function MovementsList() {
               <Button
                 color="success"
                 variant="contained"
-                onClick={() => navigation("/new-movement")}
+                onClick={() => onButtonAddInvMovClick()}
               >
                 Agregar movimiento
               </Button>
