@@ -11,6 +11,8 @@ import Divider from "@mui/material/Divider";
 import AddImageInput from "../../components/AddImageInput";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import axios from '../../config/axios';
+
 
 function NewProduct({ addProduct }) {
   const [name, setName] = useState("");
@@ -19,11 +21,47 @@ function NewProduct({ addProduct }) {
   const [brand, setBrand] = useState("");
   const [dimensions, setDimensions] = useState("");
   const [description, setDescription] = useState("");
-  const [units, setUnits] = useState("");
-  const [cost, setCost] = useState("");
-  const [price, setPrice] = useState("");
-
+  const [units, setUnits] = useState(0);
+  const [cost, setCost] = useState(0.0);
+  const [price, setPrice] = useState(0.0);
+  const [categories, setCategories] = useState([])
+  const [brands, setBrands] = useState([])
   const navigation = useNavigate();
+
+  const product = useSelector((state) => state.product.productEdit)
+  
+  useEffect(() => {initializeFields()},[])
+
+  const initializeFields = () => {
+
+    //traerse las opciones del back y setearlas en selects
+    //cada cosa está asociada con id, y mandar el post/put con ese id
+    
+
+
+    if (product != null){
+      setName(product.name)
+      setCode(product.code)
+      setCategory(product.category)
+      setDimensions(product.dimensions)
+      setBrand(product.brand)
+      setUnits(product.unitsAvailable)
+      setCost(product.cost)
+      setPrice(product.sellingPrice)
+      setDescription(product.description)
+    }
+  }
+
+  const onSubmit = () => {
+    if(product != null){
+      //edit
+    }
+    else{
+      //add
+    }
+  }
+
+
   // const dispatch = useDispatch()
 
   const addProductSubmit = () => {
@@ -183,7 +221,7 @@ function NewProduct({ addProduct }) {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
-                    onClick={addProductSubmit}
+                    onClick={onSubmit}
                   >
                     Guardar
                   </Button>

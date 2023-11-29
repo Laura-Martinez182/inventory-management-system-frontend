@@ -6,21 +6,41 @@ import PropTypes from "prop-types";
 import productsData from "../../data/products.json";
 import ProductRow from "./ProductRow";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Divider from "@mui/material/Divider";
-// import { useDispatch } from 'react-redux'
-// import axios from "../config/axios"
+import Cookies from "js-cookie";
+import axios from '../../config/axios';
+import { useDispatch } from "react-redux"
+import { setProductEdit } from "../../redux/reducers/productEditSlice";
 
 function ProductsList() {
   const [product, setProduct] = useState(productsData);
   const navigation = useNavigate();
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
+
+  const getProducts = async () => {
+    var token = Cookies.get('token-access')    
+
+    var response = await axios.get('/products/',{headers:{"authorization":("Bearer " + token)}})
+
+    setProduct(response.data)
+    console.log(response.data)
+  }
+
+  const onEditProduct = (product) => {    
+    dispatch(setProductEdit(product))
+    navigation("/new-product")
+  }
 
   const renderProduct = () => {
+
     return product.map((product) => (
-      <ProductRow key={product.id} product={product} />
+      <ProductRow key={product.code} product={product} onEditProduct={onEditProduct} />
     ));
   };
+
+  useEffect(() => {getProducts()},[])
 
   return (
     <PageTemplate>
@@ -57,25 +77,25 @@ function ProductsList() {
             <thead className="text-xs text-gray-900 uppercase bg-emerald-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  Foto
+                  Código
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Nombre
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Codigo
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Cantidad
-                </th>
-                <th scope="col" className="px-6 py-3">
                   Costo
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Precio
+                  Precio de venta
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Fecha
+                  Unidades
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Categoria
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Marca
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Acciones
